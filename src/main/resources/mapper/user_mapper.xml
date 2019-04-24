@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.dao.UsersDao" >
+    <resultMap id="BaseResultMap" type="com.demo.bean.User" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="userName" property="userName" jdbcType="VARCHAR" />
+        <result column="passWord" property="password" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="cellPhone" property="phone" jdbcType="VARCHAR" />
+        <result column="nickName" property="name" jdbcType="VARCHAR" />
+        <result column="regTime" property="regTime" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id,
+        cellPhone,
+        userName,
+        passWord,
+        email,
+        nickName,
+        regTime
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByRecord" resultMap="BaseResultMap" parameterType="com.demo.bean.User" >
+        select
+        <include refid="Base_Column_List" />
+        from user
+        <where>
+            <if test="userName != null" >
+                and userName = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="password != null" >
+                and passWord = #{passWord,jdbcType=VARCHAR}
+            </if>
+            <if test="email != null" >
+                and email = #{email,jdbcType=VARCHAR}
+            </if>
+            <if test="phone != null" >
+                and cellPhone = #{phone,jdbcType=VARCHAR}
+            </if>
+            <if test="account != null" >
+                and cellPhone = #{account,jdbcType=VARCHAR}
+            </if>
+            <if test="name != null" >
+                and nickName = #{name,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+        delete from user
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.demo.bean.User" >
+        insert into user (
+        id,
+        cellPhone,
+        userName,
+        passWord,
+        email,
+        nickName,
+        regTime)
+        values (
+        #{id,jdbcType=INTEGER},
+        #{phone,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{regTime,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.demo.bean.User" >
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                userName,
+            </if>
+            <if test="password != null" >
+                passWord,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="phone != null" >
+                cellPhone,
+            </if>
+            <if test="regTime != null" >
+                regTime,
+            </if>
+            <if test="name != null" >
+                nickName,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null" >
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="regTime != null" >
+                #{regTime,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.demo.bean.User" >
+        update user
+        <set >
+            <if test="userName != null" >
+                userName = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                passWord = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                email = #{email,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.demo.bean.User" >
+        update user
+        set userName = #{userName,jdbcType=VARCHAR},
+        passWord = #{password,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>
